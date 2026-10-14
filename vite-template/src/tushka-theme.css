@@ -1,0 +1,315 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------- Tushka brand tokens ---------- */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Vazirmatn", ui-monospace, monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@theme {
+  /* Brand palette */
+  --color-brand: #f7378c;
+  --color-brand-dark: #d6246f;
+  --color-brand-deep: #b81f63;
+  --color-brand-soft: #ffb3da;
+  --color-brand-faint: #fff0f7;
+  --color-brand-mist: #ffdcec;
+  --color-ink: #593044;
+  --color-inksoft: #8b7481;
+  --color-lavender: #d5c5f4;
+  --color-babyblue: #b9d8f5;
+  --color-peach: #ffd9c7;
+  --color-mint: #c9edd8;
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+
+  --shadow-soft: 0 10px 40px -12px rgb(247 55 140 / 0.14);
+  --shadow-lift: 0 18px 50px -16px rgb(247 55 140 / 0.22);
+  --shadow-glow: 0 0 0 6px rgb(247 55 140 / 0.08);
+
+  --animate-float-y: float-y 5s ease-in-out infinite;
+  --animate-float-y-slow: float-y 8s ease-in-out infinite;
+  --animate-heart-pop: heart-pop 0.45s cubic-bezier(0.22, 1.4, 0.36, 1);
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+}
+
+/* ---------- shadcn variables (pink theme) ---------- */
+:root {
+  --radius: 1.1rem;
+  --background: #fff6fa;
+  --foreground: #593044;
+  --card: #ffffff;
+  --card-foreground: #593044;
+  --popover: #ffffff;
+  --popover-foreground: #593044;
+  --primary: #f7378c;
+  --primary-foreground: #ffffff;
+  --secondary: #fff0f7;
+  --secondary-foreground: #b81f63;
+  --muted: #f9ecf3;
+  --muted-foreground: #8b7481;
+  --accent: #fff0f7;
+  --accent-foreground: #c2296f;
+  --destructive: #e5484d;
+  --border: #f8dce9;
+  --input: #f3d3e2;
+  --ring: #f7378c;
+  --chart-1: #f7378c;
+  --chart-2: #d5c5f4;
+  --chart-3: #b9d8f5;
+  --chart-4: #ffd9c7;
+  --chart-5: #c9a2e8;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #593044;
+  --sidebar-primary: #f7378c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fff0f7;
+  --sidebar-accent-foreground: #b81f63;
+  --sidebar-border: #f8dce9;
+  --sidebar-ring: #f7378c;
+}
+
+/* ---------- Vazirmatn (self-hosted) ---------- */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Vazirmatn", ui-sans-serif, system-ui, sans-serif;
+    overscroll-behavior-y: none;
+  }
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+  ::selection {
+    background: #f7378c;
+    color: #fff;
+  }
+}
+
+/* ---------- Tushka utilities ---------- */
+@layer utilities {
+  .glass {
+    background: rgb(255 255 255 / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgb(255 255 255 / 0.65);
+  }
+  .glass-pink {
+    background: rgb(255 240 247 / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgb(255 179 218 / 0.35);
+  }
+  .card-soft {
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 40px -12px rgb(247 55 140 / 0.14);
+    border: 1px solid #fbe7f1;
+  }
+  .btn-gradient {
+    background-image: linear-gradient(135deg, #ff7ab8 0%, #f7378c 60%, #e02a78 100%);
+    box-shadow: 0 12px 30px -10px rgb(247 55 140 / 0.55);
+  }
+  .btn-gradient:hover {
+    background-image: linear-gradient(135deg, #ff8fc4 0%, #f9479a 60%, #e6357f 100%);
+  }
+  .text-gradient {
+    background-image: linear-gradient(120deg, #f7378c, #c26ad9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .snap-x-rtl {
+    scroll-snap-type: x mandatory;
+  }
+  .snap-item {
+    scroll-snap-align: start;
+  }
+  .num-ltr {
+    direction: ltr;
+    unicode-bidi: isolate;
+    font-variant-numeric: tabular-nums;
+  }
+  .tap-none {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
+
+/* ---------- Animations ---------- */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes heart-pop {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes fade-up {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes pulse-soft {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.92;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    #fdeef6 40%,
+    #fbe0ee 50%,
+    #fdeef6 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+/* thin elegant scrollbar for admin tables */
+.thin-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: #f3bcd6;
+  border-radius: 999px;
+}
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
