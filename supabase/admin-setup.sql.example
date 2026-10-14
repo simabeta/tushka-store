@@ -1,0 +1,77 @@
+-- ═══════════════════════════════════════════════════════════════════════════
+-- TUSHKA — ساخت اولین مدیر فروشگاه (admin-setup.sql.example)
+-- ═══════════════════════════════════════════════════════════════════════════
+--
+-- ⚠️ امنیت:
+--   • این فایل را اجرا نکنید مگر یک بار هنگام راه‌اندازی.
+--   • هرگز گذرواژه پیش‌فرض/عمومی تعیین نکنید؛ عبارت STRONG-PASSWORD-HERE را
+--     با یک گذرواژه قوی و یکتا (ترجیحاً تولیدشده با مدیر گذرواژه) عوض کنید.
+--   • این عملیات باید توسط مالک پروژه در Supabase Dashboard انجام شود.
+--
+-- روش پیشنهادی (ساده و امن):
+--   گام ۱) Dashboard → Authentication → Users → «Add user»
+--          ایمیل مدیر + گذرواژه قوی + گزینه Auto Confirm User را فعال کنید.
+--   گام ۲) SQL Editor → فقط «بخش ۲» زیر را با ایمیل واقعی اجرا کنید.
+--
+-- روش جایگزین (تمام SQL):
+--   هر دو بخش را با مقادیر واقعی اجرا کنید.
+-- ═══════════════════════════════════════════════════════════════════════════
+
+-- ─── بخش ۱ (فقط برای روش تمام-SQL): ساخت کاربر auth ──────────────────────
+-- مثال ایمیل: admin@yourdomain.ir  → آن را عوض کنید.
+-- do $$ begin
+--   if not exists (select 1 from auth.users where email = 'admin@yourdomain.ir') then
+--     insert into auth.users (
+--       instance_id, id, aud, role, email,
+--       encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+--       created_at, updated_at, confirmation_token, recovery_token,
+--       email_change, email_change_token_new
+--     ) values (
+--       '00000000-0000-0000-0000-000000000000',
+--       gen_random_uuid(),
+--       'authenticated', 'authenticated',
+--       'admin@yourdomain.ir',
+--       crypt('STRONG-PASSWORD-HERE', gen_salt('bf')),
+--       now(),
+--       '{"provider":"email","providers":["email"]}'::jsonb,
+--       '{"app":"tushka","full_name":"مدیر فروشگاه","username":"admin"}'::jsonb,
+--       now(), now(), '', '', '', ''
+--     );
+--
+--     insert into auth.identities (id, user_id, provider_id, identity_data, last_sign_in_at, created_at, updated_at)
+--     select
+--       gen_random_uuid(), u.id, 'email',
+--       jsonb_build_object('sub', u.id::text, 'email', u.email, 'email_verified', true),
+--       now(), now(), now()
+--     from auth.users u
+--     where u.email = 'admin@yourdomain.ir';
+--   end if;
+-- end $$;
+
+-- ─── بخش ۲: تخصیص نام کاربری «admin» و نقش admin ─────────────────────────
+-- (این بخش را پس از ساخت کاربر — از هر روشی — اجرا کنید)
+-- do $$ begin
+--   if not exists (select 1 from tushka.user_roles ur where ur.role = 'admin') then
+--     insert into tushka.user_roles (user_id, role)
+--     select id, 'admin' from tushka.profiles
+--     where email = 'admin@yourdomain.ir';
+--   end if;
+-- end $$;
+
+-- با این کار:
+--  • ورود با نام کاربری «admin» فعال می‌شود (تابع امن lookup_login_email).
+--  • تابع is_admin() مقدار true برمی‌گرداند و دسترسی‌های پنل باز می‌شود.
+--
+-- ⚠️ نکته مهم: اگر تریگر handle_new_user هنوز اجرا نشده (کاربر با SQL ساخته
+-- شده)، پروفایل دستی بسازید:
+-- insert into tushka.profiles (id, username, full_name, email)
+-- select id, 'admin', 'مدیر فروشگاه', email from auth.users where email = 'admin@yourdomain.ir'
+-- on conflict (id) do nothing;
+--
+-- insert into tushka.user_roles (user_id, role)
+-- select id, 'admin' from tushka.profiles where username = 'admin'
+-- on conflict (user_id, role) do nothing;
+--
+-- insert into tushka.carts (user_id)
+-- select id from tushka.profiles where username = 'admin'
+-- on conflict (user_id) do nothing;
